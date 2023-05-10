@@ -14,9 +14,11 @@
 
 #include <libnetfilter_queue/libnetfilter_queue.h>
 
-FILE * fname = fopen("top-1m.csv", "r");
+
 
 using namespace std;
+
+ifstream fname("top-1m.csv");
 string host;
 
 map<string, int> fmap;
