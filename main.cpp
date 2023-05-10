@@ -5,13 +5,45 @@
 #include <linux/types.h>
 #include <linux/netfilter.h>		/* for NF_ACCEPT */
 #include <errno.h>
+#include<iostream>
+#include<fstream>
+#include<sstream>
 #include<string>
+#include<map>
 #include<string.h>
 
 #include <libnetfilter_queue/libnetfilter_queue.h>
 
+FILE * fname = fopen("top-1m.csv", "r");
+
 using namespace std;
 string host;
+
+map<string, int> fmap;
+
+void fread()
+{
+	string line;
+	while(getline(fname, line))
+	{
+		stringstream line_ream(line);
+		string field;
+		int idx;
+		idx = 0;
+
+		while(getline(line_stream, field, ','))
+		{
+			if(idx == 1)
+			{
+				// Idk value
+				fmap[field] = 0;
+			}
+			idx ++;
+		}
+	}
+	return;
+}
+
 
 void dump(unsigned char* buf, int size) {
 	int i;
@@ -26,16 +58,12 @@ void dump(unsigned char* buf, int size) {
 bool hostCheck(unsigned char* buf)
 {
     int i;
+	string tmp;
     printf("host: %s\n", host.c_str());
 
-    for(i=0;i<host.size();i++)
-    {
-        if(host[i] != buf[i])
-        {
-            return false;
-        }
-    }
-    return true;
+	tmp = buf;
+
+	return fmap.count(tmp);
 }
 
 bool parser(unsigned char* buf, int size)
@@ -191,6 +219,9 @@ int main(int argc, char **argv)
 	int fd;
 	int rv;
 	char buf[4096] __attribute__ ((aligned));
+
+	printf("read csv file \n");
+	fread();
 
 	printf("opening library handle\n");
 	h = nfq_open();
