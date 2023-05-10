@@ -58,10 +58,9 @@ void dump(unsigned char* buf, int size) {
 bool hostCheck(unsigned char* buf)
 {
     int i;
-	string tmp;
+	string tmp(reinterpret_cast<const char*>(buf), sizeof(buf));
     printf("host: %s\n", host.c_str());
 
-	tmp = buf;
 
 	return fmap.count(tmp);
 }
