@@ -26,7 +26,7 @@ void fread()
 	string line;
 	while(getline(fname, line))
 	{
-		stringstream line_ream(line);
+		stringstream line_stream(line);
 		string field;
 		int idx;
 		idx = 0;
